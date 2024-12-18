@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoGPT</title>
+    <link rel="icon" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            font-family: 'Merriweather', serif;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            color: #1a202c;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        /* Section Styles */
+        .section-title {
+            font-family: 'Merriweather', serif;
+            color: #1a202c;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2b3a42;
+            margin-top: 30px;
+            border-bottom: 0.2px solid #000000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* New List Styles */
+        p + ul, p + ol {
+            margin-top: -15px;
+            margin-bottom: 20px;
+            padding-left: 40px;
+        }
+
+        .section ul, .section ol {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .section li {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        /* Rest of your existing styles... */
+        .authors {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .authors table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .authors td {
+            padding: 5px 15px;
+        }
+
+        .authors a {
+            text-decoration: none;
+            color: #2b3a42;
+            font-weight: 500;
+        }
+
+        .authors a:hover {
+            text-decoration: underline;
+        }
+
+        .section img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add this to your existing style section */
+        .code-block {
+            background-color: #282c34;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .code-block code {
+            display: block;
+            white-space: pre-wrap;
+            color: #abb2bf;
+            line-height: 1.5;
+        }
+
+        .code-block .keyword {
+            color: #c678dd;
+        }
+
+        .code-block .function {
+            color: #61afef;
+        }
+
+        .code-block .string {
+            color: #98c379;
+        }
+
+        .code-block .number {
+            color: #d19a66;
+        }
+
+        .code-block .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .code-block .variable {
+            color: #e06c75;
+        }
+
+        .code-block .builtin {
+            color: #56b6c2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .video-container iframe {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Data Processing Framework for the FineWeb-Edu Dataset</h1>
+        </div>
+
+        <!-- Authors and Affiliations -->
+        <div class="authors">
+            <table>
+                <tr>
+                    <td>Abdulloh</td>
+                    <td>Muhammad Yusril Hasriansyah</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Abstract -->
+        <section>
+            <h3 class="section-title">Abstract</h3>
+            <p>Large-scale pretraining of language models requires not only vast amounts of high-quality text data but also efficient preprocessing pipelines to handle such datasets. We present a robust data processing framework for the FineWeb-Edu dataset, a collection of educational texts designed for training transformer-based language models. This framework provides a scalable solution for downloading, tokenizing, and sharding text data into compact formats suitable for language model training. The processing pipeline is built around key principles of parallelism, memory efficiency, and compatibility with modern tokenization approaches. In this work, we describe the design, implementation, and performance characteristics of the framework while addressing challenges in processing large datasets. Furthermore, we propose extensions to improve flexibility and efficiency. This framework provides a practical solution for researchers and engineers working on large-scale language models.</p>
+        </section>
+
+        <!-- Introduction -->
+        <section>
+            <div class="section-title">Introduction</div>
+            <p>The evolution of natural language processing (NLP) has been driven by increasingly large-scale transformer-based models, such as GPT-3, T5, and PaLM. These models rely on pretraining with massive volumes of text data from diverse domains. However, the raw datasets are often unstructured, unoptimized, and unsuitable for direct use, requiring significant preprocessing. Tokenization, efficient storage, and sharding of datasets are critical steps in preparing data for large-scale training.</p>
+            <p>The FineWeb-Edu dataset is an educational resource containing diverse textual information, making it an excellent candidate for use in pretraining and fine-tuning language models. However, its raw format poses several challenges:</p>
+            <ul>
+                <li>The dataset is large, requiring substantial computational resources to process.</li>
+                <li>The data must be tokenized using a tokenizer compatible with the target language model.</li>
+                <li>Efficient storage and retrieval mechanisms must be implemented to handle the dataset during training.</li>
+            </ul>
+            <p>This paper presents a Python-based preprocessing framework specifically designed for the FineWeb-Edu dataset. The framework tokenizes the dataset with the GPT-2 tokenizer and organizes it into fixed-size shards of 100 million tokens, enabling efficient storage and fast access during training. By leveraging parallelism and optimized memory management, the framework ensures scalability for large datasets.</p>
+        </section>
+
+        <!-- Dataset Overview -->
+        <section>
+            <div class="section-title">Dataset Overview</div>
+            <p>The FineWeb-Edu dataset, hosted on Hugging Face's dataset platform, is a collection of educational texts curated for research and model pretraining. The dataset is available in multiple configurations; this framework uses the sample-10BT configuration, which provides a subset of the full dataset for testing and development purposes.</p>
+            <p>Key Characteristics:</p>
+            <ul>
+                <li><strong>Source:</strong> Hugging Face Dataset Hub</li>
+                <li><strong>Content:</strong> Educational documents, including articles, essays, and reports.</li>
+                <li><strong>Structure:</strong> Each document contains a dictionary with a <code>"text"</code> field that holds the raw text.</li>
+                <li><strong>Split:</strong> The dataset is processed into two splits:</li>
+                <li>A <strong>validation</strong> set comprising the first shard (100 million tokens).</li>
+                <li>A <strong>training</strong> set comprising the remaining shards.</li>
+            </ul>
+            <p>The dataset’s unstructured nature necessitates careful preprocessing to ensure compatibility with transformer-based language models.</p>
+        </section>
+
+        <!-- Objectives -->
+        <section>
+            <h3 class="section-title">Objectives</h3>
+            <p>
+                <ul>
+                    <li>Efficiently process large-scale datasets into tokenized formats.</li>
+                    <li>Support parallel processing to accelerate tokenization.</li>
+                    <li>Segment the tokenized data into fixed-size shards for efficient storage and retrieval.</li>
+                    <li>Ensure compatibility with GPT-based tokenizers and models.</li>
+                </ul>
+            </p>
+
+        <!-- Architecture -->
+            <div class="section-title">Architecture</div>
+            <p>The framework consists of the following components:</p>
+            <ul>
+                <li><strong>Dataset Loader:</strong> Downloads the FineWeb-Edu dataset using the Hugging Face <code>datasets</code> library.</li>
+                <li><strong>Tokenizer:</strong> Utilizes the GPT-2 tokenizer from the <code>tiktoken</code> library to convert text into token sequences.</li>
+                <li><strong>Shard Allocator:</strong> Buffers tokenized sequences into fixed-size shards (100 million tokens per shard).</li>
+                <li><strong>Parallel Processing Module:</strong> Uses Python's <code>multiprocessing</code> library to tokenize documents in parallel, improving throughput.</li>
+                <li><strong>Shard Saver:</strong> Saves tokenized shards to disk in <code>.npy</code> format for efficient storage.</li>
+            </ul>
+        </section>
+
+        <!-- Workflow Description -->
+        <h1 class="section-title">Workflow Description</h1>
+
+        <!-- Initialization -->
+        <h3 class="section-title">Initialization</h3>
+        <p>The script sets up the processing environment, creates the <code>CACHE_DIR</code> directory to store processed shard files, and loads the FineWeb-Edu dataset using the Hugging Face <code>load_dataset</code> API.</p>
+
+        <!-- Tokenization -->
+        <h3 class="section-title">Tokenization</h3>
+        <p>The <code>process_document</code> function tokenizes each document. Key steps include:</p>
+        <ul>
+            <li>Appending a special End-of-Text (EOT) token to the document.</li>
+            <li>Tokenizing the document text using the GPT-2 tokenizer.</li>
+            <li>Converting the tokenized output into a NumPy array of <code>uint16</code> type for compact storage.</li>
+        </ul>
+
+        <!-- Process Document Function -->
+        <div class="code-block">
+            <pre><code><span class="keyword">def</span> <span class="function">process_document</span>(doc):
+    <span class="variable">tokens</span> = [<span class="variable">EOT_TOKEN</span>]
+    <span class="variable">tokens</span>.extend(<span class="variable">tokenizer</span>.<span class="function">encode_ordinary</span>(doc[<span class="string">"text"</span>]))
+    <span class="variable">token_array</span> = <span class="variable">np</span>.<span class="function">array</span>(tokens)
+    <span class="comment"># Verify token range</span>
+    <span class="keyword">assert</span> (<span class="number">0</span> <= token_array).all() and (token_array < <span class="number">2**16</span>).all()
+    <span class="keyword">return</span> token_array.astype(<span class="variable">np</span>.uint16)</code></pre>
+        </div>
+
+        <!-- Dataset Loading Example -->
+        <div class="code-block">
+            <pre><code><span class="keyword">from</span> datasets <span class="keyword">import</span> load_dataset
+    <span class="variable">dataset</span> = <span class="function">load_dataset</span>(<span class="string">"fineweb-edu"</span>, 
+                            split=<span class="string">"train"</span>, 
+                            cache_dir=<span class="variable">CACHE_DIR</span>)</code></pre>
+        </div>
+
+        <!-- Tokenization Example -->
+        <div class="code-block">
+            <pre><code><span class="keyword">import</span> tiktoken
+<span class="variable">tokenizer</span> = tiktoken.<span class="function">get_encoding</span>(<span class="string">"gpt2"</span>)
+<span class="variable">tokens</span> = <span class="variable">tokenizer</span>.<span class="function">encode_ordinary</span>(text)
+<span class="variable">token_array</span> = <span class="variable">np</span>.<span class="function">array</span>(tokens, dtype=<span class="variable">np</span>.uint16)</code></pre>
+        </div>
+
+        <!-- Shard Processing Example -->
+        <div class="code-block">
+            <pre><code><span class="keyword">def</span> <span class="function">process_shard</span>(tokens, shard_size=<span class="number">100_000_000</span>):
+    <span class="variable">current_shard</span> = []
+    <span class="variable">current_size</span> = <span class="number">0</span>
+    <span class="keyword">for</span> token_sequence <span class="keyword">in</span> tokens:
+    <span class="keyword">if</span> current_size + <span class="function">len</span>(token_sequence) > shard_size:
+        <span class="keyword">yield</span> <span class="variable">np</span>.<span class="function">concatenate</span>(current_shard)
+                        current_shard = []
+                        current_size = <span class="number">0</span>
+                    current_shard.<span class="function">append</span>(token_sequence)
+                    current_size += <span class="function">len</span>(token_sequence)
+            
+    <span class="keyword">if</span> current_shard:
+        <span class="keyword">yield</span> <span class="variable">np</span>.<span class="function">concatenate</span>(current_shard)</code></pre>
+        </div>    
+
+        <!-- Shard Allocation -->
+        <h3 class="section-title">Shard Allocation</h3>
+        <p>Tokenized documents are buffered into a shard until the shard reaches the defined size (100 million tokens). If a document exceeds the remaining space in the current shard it is split between the current shard and the next one. The shards are saved to disk with the following naming convention:</p>
+        <ul>
+            <li>Validation Shard: <code>edufineweb_val_000000.npy</code></li>
+            <li>Training Shards: <code>edufineweb_train_XXXXXX.npy</code> (e.g., <code>edufineweb_train_000001.npy</code>).</li>
+        </ul>
+
+        <!-- Parallel Processing -->
+        <h3 class="section-title">Parallel Processing</h3>
+        <p>The framework uses parallel processing to tokenize documents efficiently. A multiprocessing pool is initialized with half the available CPU cores, and documents are tokenized in parallel using the <code>pool.imap</code> function.</p>
+
+        <h3 class="section-title">Finalization</h3>
+        <p>After processing all documents, any remaining tokens in the buffer are saved as a partial shard.</p>
+    </section>
+
+    <!-- Performance Considerations Section -->
+    <section>
+        <h2 class="section-title">Performance Considerations</h2>
+        <p>
+            <ul>
+                <li><strong>Parallel Processing:</strong> By utilizing multiprocessing, the framework achieves significant speedup on multi-core systems.</li>
+                <li><strong>Memory Management:</strong> Fixed shard sizes ensure predictable memory usage during processing and training.</li>
+                <li><strong>Compact Storage:</strong> The use of NumPy arrays with <code>uint16</code> data type minimizes storage requirements.</li>
+            </ul>
+        </p>
+    </section>
+
+    <!-- Results Section -->
+    <section>
+        <h2 class="section-title">Results</h2>
+        <p>The framework successfully processes the FineWeb-Edu dataset into tokenized shards. Each shard contains a maximum of 100 million tokens, except for the final shard, which may be smaller. The processed shards are stored in .npy format and can be seamlessly integrated into language model training pipelines.</p>
+        <p>Example Outputs:</p>
+        <ul>
+            <li><code>edufineweb_val_000000.npy</code> (Validation shard)</li>
+            <li><code>edufineweb_train_000001.npy</code> (First training shard)</li>
+            <li><code>edufineweb_train_000002.npy</code> (Second training shard)</li>
+        </ul>
+    </section>
+
+    <!-- Limitations Section -->
+    <section>
+        <h2 class="section-title">Limitations</h2>
+        <p>
+            <ul>
+                <li><strong>Dataset Dependency:</strong> The framework is designed specifically for the FineWeb-Edu dataset. Adapting it to other datasets may require modifications.</li>
+                <li><strong>Fixed Shard Size:</strong> The shard size is static (100 million tokens). While this simplifies processing, dynamic shard sizes could improve flexibility.</li>
+                <li><strong>Tokenizer Compatibility:</strong> The framework currently supports only the GPT-2 tokenizer. Other tokenizers may require additional implementation.</li>
+            </ul>
+        </p>
+    </section>
+
+    <!-- Future Work Section -->
+    <section>
+        <h2 class="section-title">Future Work</h2>
+        <p>
+            <ul>
+                <li><strong>Dynamic Shard Sizes:</strong> Implement dynamic shard allocation based on memory and dataset size.</li>
+                <li><strong>Support for Multiple Tokenizers:</strong> Extend the framework to support other tokenizers like BERT and T5.</li>
+                <li><strong>Improved Logging:</strong> Add detailed logging for metrics and processing speed.</li>
+                <li><strong>Distributed Tokenization:</strong> Enable distributed processing for larger datasets.</li>
+            </ul>
+        </p>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section>
+        <h2 class="section-title">Conclusion</h2>
+        <p>This paper presents a robust and efficient framework for processing the FineWeb-Edu dataset into tokenized shards suitable for large-scale language model training. By leveraging parallel processing and fixed-size shard allocation, the framework ensures scalability and compatibility with GPT-based models. This work provides a foundation for further enhancements in preprocessing pipelines for NLP datasets.</p>
+    </section>
+
+    <!-- References Section -->
+    <section>
+        <h2 class="section-title">References</h2>
+            <p>
+                <ol>
+                    <li><a href="https://huggingface.co/datasets">Hugging Face Datasets</a></li>
+                    <li><a href="https://github.com/openai/tiktoken">tiktoken Tokenizer</a></li>
+                    <li><a href="https://huggingface.co/gpt2">GPT-2 Model</a></li>
+                    <li><a href="https://numpy.org">NumPy Library</a></li>
+                    <li><a href="https://docs.python.org/3/library/multiprocessing.html">Python Multiprocessing</a></li>
+                </ol>
+            </p>
+    </section>
+
+    <!-- Links -->
+    <section>
+        <h2 class="section-title">Code Links</h2>
+            <p>
+                <ol>
+                    <li><a href="https://huggingface.co/datasets">Hugging Face Datasets</a></li>
+                </ol>
+            </p>
+    </section>
+    </div>
+</body>
+</html>
